@@ -28,14 +28,15 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 // Initialize provider
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 // Set up Google auth
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
     prompt: "select_account" // Force users to select an account
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect= () => signInWithRedirect(auth, googleProvider) ;
 
 export const db= getFirestore();
 
@@ -53,8 +54,8 @@ export const createUserDocumentFromAuth= async (userAuth) => {
 
  //if user data does not exist
  if(!userSnapshot.exists())
-{
-  const{displayName,email }= userAuth;
+{ const{displayName,email }= userAuth;
+ 
   const createdAt = new Date(); //new Date() Object , when users are sign it
 
   try{
